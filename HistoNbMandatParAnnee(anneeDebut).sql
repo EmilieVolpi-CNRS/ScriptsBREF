@@ -21,7 +21,7 @@ BEGIN
 	foreach man in array arr
 	loop
 		typemandat := man;
-		select make_date(anneedebut, 1,1), max("DateFinMandat")
+		select make_date(anneedebut, 1,1), current_date
 		into mindate, maxdate
 		from "BREF"."Mandat"
 		where "BREF"."Mandat"."TypeDuMandat_IdTypeMandat" = (select "IdTypeMandat" from "BREF"."TypeMandat"

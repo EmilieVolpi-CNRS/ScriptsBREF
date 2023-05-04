@@ -1,3 +1,7 @@
+-- FUNCTION: BREF.HistoNbMairesParDateElection(integer)
+
+-- DROP FUNCTION IF EXISTS "BREF"."HistoNbMairesParDateElection"(integer);
+
 CREATE OR REPLACE FUNCTION "BREF"."HistoNbMairesParDateElection"(
 	anneedebut integer)
     RETURNS TABLE(dateelection date, nbm integer) 
@@ -20,7 +24,14 @@ BEGIN
 		order by "Date" asc
 	loop
 		mindate = date_rec."Date";
-		maxdate = mindate + 30;
+		
+		select into maxdate "Date" from "BREF"."SuffrageElection" where "Election" = 4
+		and "Date" >= mindate
+		and "Tour" = 2
+		order by "Date"
+		limit 1;
+		
+		maxdate = maxdate + 30;
 
 		select into nb count(distinct "IdFonction")
 		from "BREF"."Fonction"
@@ -28,9 +39,12 @@ BEGIN
 		and "DateDebutFonction" >= mindate and "DateDebutFonction" <= maxdate
 		and ("DateFinFonction" > maxdate or "DateFinFonction" is null);
 
-		dateelection := mindate;
+		dateelection := maxdate - 30;
 		nbM := nb;
 		return next;
 	end loop;
 END;
 $BODY$;
+
+ALTER FUNCTION "BREF"."HistoNbMairesParDateElection"(integer)
+    OWNER TO user_bref_dev;

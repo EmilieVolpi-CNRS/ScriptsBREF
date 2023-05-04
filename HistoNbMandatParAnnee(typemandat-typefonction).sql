@@ -16,7 +16,7 @@ maxannee int;
 i int;
 nb int;
 BEGIN
-	select min("DateDebutMandat"), max("DateFinMandat")
+	select min("DateDebutMandat"), current_date
 	into mindate, maxdate
 	from "BREF"."Mandat"
 	where "BREF"."Mandat"."TypeDuMandat_IdTypeMandat" = (select "IdTypeMandat" from "BREF"."TypeMandat"

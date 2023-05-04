@@ -30,8 +30,24 @@ BEGIN
 			order by "Date" asc
 		loop
 			mindate = date_rec."Date";
-			maxdate = mindate + 30;
-			dateelection := mindate;
+-- 			maxdate = mindate + 30;
+			dateelection := mindate;		
+						
+			-- special case for the 2020 municipal election
+			if (typemandat = 'CONSEILLER MUNICIPAL' 
+				and mindate = '2020-03-15')
+			then
+				select into dateelection "Date" 
+					from "BREF"."SuffrageElection" 
+					where "Election" = 4
+					and "Date" >= mindate
+					and "Tour" = 2
+					order by "Date"
+					limit 1;				
+			end if;
+			
+			maxdate = dateelection + 30;
+			
 			for rec in
 				select "Individu"."IdIndividu", "NomDeNaissance", "Prenom", "Sexe", "DateNaissance",
 				"Mandat"."IdMandat", T1."NomTerritoire", "Mandat"."DateDebutMandat", "Mandat"."DateFinMandat", "Mandat"."MotifFinMandat", "LibelleProfession", "NuancePolitique",
