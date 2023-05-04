@@ -1,4 +1,4 @@
-REATE OR REPLACE FUNCTION "BREF"."HistoNbMandatParAnnee"(
+CREATE OR REPLACE FUNCTION "BREF"."HistoNbMandatParAnnee"(
 	)
     RETURNS TABLE(typemandat character varying, annee integer, nbm integer) 
     LANGUAGE 'plpgsql'
