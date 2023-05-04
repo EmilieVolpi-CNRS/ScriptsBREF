@@ -1,14 +1,11 @@
 CREATE OR REPLACE FUNCTION "BREF"."NoviciatParDateElection"(
 	anneedebut integer)
-    RETURNS TABLE(typemandat character varying, dateelection date, id_individu character varying, nom_naissance character varying, prenom character varying, sexe character varying, date_naissance date,
-			id_mandat integer, nom_territoire character varying, date_debut_mandat date, date_fin_mandat date, motif_fin_mandat character varying, libelle_profession character varying, nuance_politique character varying,
-			date_debut_mandat_noviciat_pol date, type_mandat_noviciat_pol character varying, nom_territoire_mandat_noviciat_pol character varying,
-			date_debut_mandat_noviciat_inst date, type_mandat_noviciat_inst character varying, nom_territoire_mandat_noviciat_inst character varying) 
+    RETURNS TABLE(typemandat character varying, dateelection date, id_individu character varying, nom_naissance character varying, prenom character varying, sexe character varying, date_naissance date, id_mandat integer, nom_territoire character varying, date_debut_mandat date, date_fin_mandat date, motif_fin_mandat character varying, libelle_profession character varying, nuance_politique character varying, date_debut_mandat_noviciat_pol date, type_mandat_noviciat_pol character varying, nom_territoire_mandat_noviciat_pol character varying, date_debut_mandat_noviciat_inst date, type_mandat_noviciat_inst character varying, nom_territoire_mandat_noviciat_inst character varying) 
     LANGUAGE 'plpgsql'
-    COST 100
-    VOLATILE PARALLEL UNSAFE
-    ROWS 1000
 
+    COST 100
+    VOLATILE 
+    ROWS 1000
 AS $BODY$
 DECLARE
 arr varchar[] := array['DEPUTE', 'SENATEUR', 'REPRESENTANT AU PARLEMENT EUROPEEN',  'CONSEILLER REGIONAL', 'CONSEILLER DEPARTEMENTAL', 'CONSEILLER MUNICIPAL'];
